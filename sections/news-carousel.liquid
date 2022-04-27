@@ -1,0 +1,85 @@
+{% for block in section.blocks %}
+<h1>{{block.type}}</h1>
+{% if block.type == 'campaign' %}
+<h3 style='color:red;'>Title</h3>
+{% elsif block.type == 'products' %}
+<h3 style='color:blue;'>Title</h3>
+{% else %}
+<h3 style='color:green;'>Title</h3>
+{% endif %}
+<h4>{{block.settings.title}}</h4>
+<h3>Description</h3>
+<h4>{{block.settings.description}}</h4>
+{% endfor %}
+
+{% schema %}
+{
+	"name": "Shopify blocks",
+	"blocks": [{
+			"name": "Campaign",
+			"type": "campaign",
+			"settings": [{
+					"type": "text",
+					"id": "title",
+					"label": "title"
+				},
+				{
+					"type": "textarea",
+					"id": "description",
+					"label": "description"
+				},
+				{
+					"type": "checkbox",
+					"label": "Featured",
+					"id": "Featured",
+					"default": false
+				}
+			]
+		},
+		{
+			"name": "New Products",
+			"type": "products",
+			"settings": [{
+					"type": "text",
+					"id": "title",
+					"label": "title"
+				},
+				{
+					"type": "textarea",
+					"id": "description",
+					"label": "description"
+				},
+				{
+					"type": "checkbox",
+					"label": "Featured",
+					"id": "Featured",
+					"default": false
+				}
+			]
+		},
+		{
+			"name": "News",
+			"type": "news",
+			"settings": [{
+					"type": "text",
+					"id": "title",
+					"label": "title"
+				},
+				{
+					"type": "textarea",
+					"id": "description",
+					"label": "description"
+				},
+				{
+					"type": "checkbox",
+					"label": "Featured",
+					"id": "Featured",
+					"default": false
+				}
+			]
+		}
+
+	]
+}
+    
+{% endschema %}
