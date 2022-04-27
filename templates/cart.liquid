@@ -35,6 +35,12 @@
       </tbody>
     </table>
     <div>
+      <input type="checkbox" id="toggle_instructions" name="addinstructions" value="true" checked>
+  	  <label for="vehicle1"> Add Instructions: </label><br><br>
+      <div id='instruction-container'>
+        <label for="CartNote">Special instructions</label><br>
+	  	<textarea name="note" id="CartNote">{{ cart.note }}</textarea>
+      </div>    
       <p>sub total : {{ cart.total_price | money }}</p>
       <button type="submit" name="update">Update</button>
       <button type="submit" name="checkout">Checkout</button>
@@ -44,3 +50,9 @@
   <h2>cart</h2>
   Cart is empty
 {% endif %}
+
+<script>
+  $("#toggle_instructions").change(function () {
+   $("#instruction-container").toggle();
+});
+</script>
