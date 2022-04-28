@@ -1,0 +1,141 @@
+<style>
+    #modal-dark-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      overflow: auto;
+      animation-name: animateopacity;
+      animation-duration: 0.5s;
+    }  
+    @keyframes animateopacity {
+      from {background-color: rgba(0, 0, 0, 0.0)}
+      to {background-color: rgba(0, 0, 0, 0.7)}
+    }
+    #modal-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #modal {
+      position: relative;
+      margin: 0 auto;
+      background-color: white;
+      width: 30%;
+      height: auto;
+      padding: 20px 40px 50px 40px;
+      box-shadow: -1px 3px 18px 0px rgba(128,128,128,1);
+      animation: drop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform: translate(0%, -25%);
+      top: 25%;
+    }
+    @media(max-width: 1200px){
+      #modal {
+        width: 40%;
+      }  
+    }
+    @media(max-width: 770px){
+      #modal {
+        width: 85%;
+      }  
+    }  
+    @keyframes drop-in {
+      from {top: 10%;}
+      to {top: 25%}
+    }  
+    #modal-exit {
+      position: absolute;
+      right: 20px;
+      border:none;
+      background:none;
+      font-size: 18px;
+    }
+  
+    #modal-button {
+      position: relative;
+      background: black;
+      color: white;
+      width: 200px;  
+    }
+    @media(max-width: 770px){
+      #modal-button {
+        width: 150px;
+        display: flex;
+        justify-content: center;
+      } 
+    }    
+  </style>
+  
+  <button id="modal-button" class="btn">Cart Detailst</button>
+  <div id="modal-dark-overlay"></div>
+  
+  <div id="modal-container">
+    <div id="modal">
+      <button id="modal-exit">&#x2715;</button>
+      <h1>Cart Details</h1>
+      <p id="modal-success-message"></p>
+      <div id="modal-content">
+         <table>
+        <tbody>
+          {% for item in cart.items %}
+            <tr>
+              <td>{{ product.title }}</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="{{ item.url | within: collections.all }}">
+                  <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                </a>
+              </td>
+            <tr>
+              <td>Price per Item:</td>
+              <td>{{ item.price | money }}</td>
+            </tr>
+            <tr>
+              <td>Item/s ordered</td>
+              <td>{{ item.quantity }}<td>
+            </tr>
+            <tr>
+              <td>Total in cart:</td>
+              <td>{{ cart.total_price | money }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const showOverlay = () => document.querySelector("#modal-dark-overlay").style.display = "block";
+    const showModal = () => document.querySelector("#modal-container").style.display = "block";  
+    const hideOverlay = () => document.querySelector("#modal-dark-overlay").style.display = "none";
+    const hideModal = () => document.querySelector("#modal-container").style.display = "none";  
+    // Opens the Modal Window on product page load
+    showOverlay();
+    showModal();
+    // Close the Modal Window when clicking the X button
+    document.getElementById("modal-exit").onclick = function(){
+      hideOverlay();
+      hideModal();
+    }
+    // Opens the Modal Window when clicking cart details button
+    document.getElementById("modal-button").onclick = function(){
+      showOverlay();
+        showModal();
+    }
+    // Close the Modal Window when clicking outside the box  
+    window.onclick = function(event) {
+      if(event.target === document.querySelector('#modal-container')) {
+        hideOverlay();
+        hideModal();    	
+      }
+    }
+  
+  </script>
